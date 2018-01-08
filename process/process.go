@@ -2,6 +2,12 @@ package process
 
 import "regexp"
 
+type BasicNode interface {
+	Start()
+	Out() chan *Event
+	Done() chan bool
+}
+
 type ProcessFunc func(in *Event) (out *Event)
 
 type Process struct {
@@ -36,6 +42,10 @@ func (s *Process) Start() {
 
 func (s *Process) Out() chan *Event {
 	return s.out
+}
+
+func (s *Process) Done() chan bool {
+	return nil
 }
 
 func GenRegexpFilter(filter map[string]string) ProcessFunc {

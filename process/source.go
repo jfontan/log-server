@@ -31,6 +31,10 @@ func (s *Source) Out() chan *Event {
 	return s.out
 }
 
+func (s *Source) Done() chan bool {
+	return nil
+}
+
 func GenFileSource(fileName string) SourceFunc {
 	file, err := os.Open(fileName)
 	if err != nil {

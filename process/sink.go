@@ -34,6 +34,10 @@ func (s *Sink) Done() chan bool {
 	return s.done
 }
 
+func (s *Sink) Out() chan *Event {
+	return nil
+}
+
 func GenPrintKeySink(key string) SinkFunc {
 	return func(event *Event) {
 		fmt.Println(event.Data[key])

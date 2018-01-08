@@ -32,3 +32,7 @@ func (t *Tee) Out() chan *Event {
 
 	return out
 }
+
+func (t *Tee) Done() chan bool {
+	return nil
+}

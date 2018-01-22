@@ -64,6 +64,29 @@ var nodeTypes = map[string]NodeType{
 			return sink
 		},
 	},
+	"CounterProcess": {
+		Name: "CounterProcess",
+		Type: "process",
+		Create: func(c chan *Event, n Node) BasicNode {
+			name, ok := n.Args.(string)
+			if !ok {
+				panic("Argument invalid")
+			}
+
+			counterProcess := GenCounterProcess(name)
+			process := NewProcess(c, counterProcess)
+			return process
+		},
+	},
+	"PrintCountersSink": {
+		Name: "PrintCountersSink",
+		Type: "sink",
+		Create: func(c chan *Event, n Node) BasicNode {
+			printCounter := GenPrintCounters()
+			sink := NewSink(c, printCounter)
+			return sink
+		},
+	},
 }
 
 func LoadNodes(fileName string) Nodes {

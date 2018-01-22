@@ -70,3 +70,23 @@ func GenRegexpFilter(filter map[string]string) ProcessFunc {
 		return event
 	}
 }
+
+var counters map[string]uint
+
+func GenCounterProcess(name string) ProcessFunc {
+	if counters == nil {
+		counters = make(map[string]uint)
+	}
+
+	_, ok := counters[name]
+	if ok {
+		panic("Trying to redefine counter named " + name)
+	}
+
+	counters[name] = 0
+
+	return func(event *Event) *Event {
+		counters[name]++
+		return event
+	}
+}

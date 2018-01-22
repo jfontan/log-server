@@ -43,3 +43,11 @@ func GenPrintKeySink(key string) SinkFunc {
 		fmt.Println(event.Data[key])
 	}
 }
+
+func GenPrintCounters() SinkFunc {
+	return func(event *Event) {
+		for name, count := range counters {
+			fmt.Printf("%v = %v\n", name, count)
+		}
+	}
+}

@@ -3,16 +3,27 @@
   type: FileSource
   args: logs
   children:
-    - name: filter siva error
-      type: RegexpFilter
-      map:
-        lvl: "^eror$"
-        error: "index read failed"
+    - name: count all
+      type: CounterAction
+      args: total
       children:
-        - name: print root
-          type: PrintKeySink
-          args: "root"
-        - name: print msg
-          type: PrintKeySink
-          args: "msg"
+      - name: filter siva error
+        type: RegexpFilter
+        map:
+          lvl: "^eror$"
+          error: "index read failed"
+        children:
+          - name: print root
+            type: PrintKeySink
+            args: "root"
+          - name: print msg
+            type: PrintKeySink
+            args: "msg"
+          - name: count siva errors
+            type: CounterAction
+            args: siva_errors
+            children:
+              - name: print counters
+                type: PrintCountersSink
+
 
